@@ -16,10 +16,10 @@
 				<li>Learn MYSQL</li>
 				<li>Learn PHP</li>
 			</ul>	
-	</body>	
+	<h3>New TODO Items</h3>
 	<form method="POST" Action=/"index.php">
 		<p>
-			<label for="todo_item">New todo item</label>
+			<label for="todo_item">New Todo item</label>
 			<textarea id="todo_item" name="todo_item" rows="1" cols="40" type="text">
 			</textarea>
 		</p>
@@ -28,4 +28,5 @@
 		</p>
 	</form>
 
+	</body>	
 </html>
