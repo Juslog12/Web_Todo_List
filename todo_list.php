@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<meta charset="utf-8">
+			<title>TODO List</title>
+	</head>	
+	<body>
+	<?php
+    var_dump($_GET);
+    var_dump($_POST);
+    ?>
+		<h3>TODO List</h3>
+			<ul>
+				<li>Learn LINUX</li>
+				<li>Learn APACHE</li>
+				<li>Learn MYSQL</li>
+				<li>Learn PHP</li>
+			</ul>	
+	<h3>New ToDo Items</h3>
+	<form method="POST" Action=/"todo_list.html">
+		<p>
+			<label for="todo_item">New Todo item</label>
+			<textarea id="todo_item" name="todo_item" rows="1" cols="40" type="text">
+			</textarea>
+		</p>
+		<p>	
+			<input type="submit" value="Add">		
+		</p>
+	</form>
+
+	</body>	
+</html>
