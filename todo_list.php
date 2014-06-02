@@ -3,6 +3,7 @@ var_dump($_FILES);
 define('FILENAME', 'data/list.txt');
 
 $list_items =[];
+$error_message = "";
 
 function savefile($filename, $array) {
 	$handle = fopen($filename, 'w');
@@ -38,16 +39,19 @@ if (isset($_GET['removeIndex'])) {
 }
 
 if(count($_FILES) > 0 && $_FILES['file1']['error'] == 0) {
-	$upload_dir = '/vagrant/sites/todo.dev/public/uploads/';
-	$filename = basename($_FILES['file1']['name']);
-	$saved_filename = $upload_dir . $filename; 
-	move_uploaded_file($_FILES['file1']['tmp_name'], $saved_filename);
-	$new_items = readtheFile($saved_filename);
-
-	$list_items = array_merge($list_items, $new_items);
+	if($_FILES['file1']['type'] == 'text/plain') {
+		$upload_dir = '/vagrant/sites/todo.dev/public/uploads/';
+		$filename = basename($_FILES['file1']['name']);
+		$saved_filename = $upload_dir . $filename; 
+		move_uploaded_file($_FILES['file1']['tmp_name'], $saved_filename);
+		$new_items = readtheFile($saved_filename);
+		$list_items = array_merge($list_items, $new_items);
+	} else {
+		$error_message = "Error! Not a valid form type!";
+	}
 
 } 
-
+savefile(FILENAME,$list_items);
 if(isset($saved_filename)) {
 	echo "<p>You can download your file <a href='/uploads/{$filename}'>here</a>.</p>";
 }
@@ -60,21 +64,19 @@ if(isset($saved_filename)) {
 		<title>TODO List</title>
 	</head>	
 	<body>
-	<?php
+	<?
 	    var_dump($_GET);
 	    var_dump($_POST);
     ?>
-		<h3>TODO List</h3>
-<?php
+	<h3>TODO List</h3>
+	<ul>
+	<?
 
-		foreach ($list_items as $index => $item) {
-			echo "<li>$item <a href=\"todo_list.php?removeIndex=$index\">Remove Item</a></li>";
-		}
+	foreach ($list_items as $index => $item): ?>
+		<li><?= htmlspecialchars(strip_tags($item));?><a href=\"todo_list.php?removeIndex=$index\">Remove Item</a></li>
+	<? endforeach; ?>	
+	</ul>		
 
-    	savefile(FILENAME,$list_items);
-  
-?>
-		
 	<h3>New ToDo Items</h3>
 	<form method="POST" action = "todo_list.php">
 		<p>
@@ -88,7 +90,7 @@ if(isset($saved_filename)) {
 
 	</form>
 	
-	<h1>Upload File</h1>
+	<h3>Upload File</h3>
 
 <form method="POST" enctype="multipart/form-data">
     <p>
