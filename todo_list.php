@@ -1,5 +1,5 @@
-<?php
-var_dump($_FILES);
+<?
+//var_dump($_FILES);
 define('FILENAME', 'data/list.txt');
 
 $list_items =[];
@@ -62,23 +62,20 @@ if(isset($saved_filename)) {
 	<head>
 		<meta charset="utf-8">
 		<title>TODO List</title>
+		<link rel="stylesheet" href="/css/todostyle.css" />
 	</head>	
 	<body>
-	<?
-	    var_dump($_GET);
-	    var_dump($_POST);
-    ?>
-	<h3>TODO List</h3>
+	<h3 id="main">TODO List</h3>
 	<ul>
 	<?
 
 	foreach ($list_items as $index => $item): ?>
-		<li><?= htmlspecialchars(strip_tags($item));?><a href=\"todo_list.php?removeIndex=$index\">Remove Item</a></li>
+		<li><?= htmlspecialchars(strip_tags($item)) . "<a href=\"todo_list.php?removeIndex=$index\">Remove Item</a>"; ?></li>
 	<? endforeach; ?>	
 	</ul>		
 
 	<h3>New ToDo Items</h3>
-	<form method="POST" action = "todo_list.php">
+	<form method="POST" type="text/css" action="/todo_list.php">
 		<p>
 			<label for="todo_item">New Todo item</label>
 			<textarea id="todo_item" name="todo_item" rows="1" cols="40" type="text" autofocus = "autofocus">
@@ -92,15 +89,15 @@ if(isset($saved_filename)) {
 	
 	<h3>Upload File</h3>
 
-<form method="POST" enctype="multipart/form-data">
-    <p>
-        <label for="file1">File to upload: </label>
-        <input type="file" id="file1" name="file1">
-    </p>
-    <p>
-        <input type="submit" value="Upload">
-    </p>
-</form>
+	<form method="POST" enctype="multipart/form-data">
+	    <p>
+	        <label for="file1">File to upload: </label>
+	        <input type="file" id="file1" name="file1">
+	    </p>
+	    <p>
+	        <input type="submit" value="Upload">
+	    </p>
+	</form>
 
 	</body>	
 </html>
