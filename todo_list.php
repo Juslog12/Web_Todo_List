@@ -1,17 +1,14 @@
 <?
-//var_dump($_FILES);
-define('FILENAME', 'data/list.txt');
+require_once('classes/filestore.php');
 
+//define('FILENAME', 'data/list.txt');
 $list_items =[];
 $error_message = "";
 
-function savefile($filename, $array) {
-	$handle = fopen($filename, 'w');
-	foreach ($array as $item) {
-		fwrite($handle, $item . PHP_EOL);		
-	}
-	fclose($handle);
-}
+$todos = new Filestore('data/list.txt');
+$todoList = $todos->read_lines($todos->filename);
+
+define('FILENAME', $todos->filename);
 
 function readtheFile($filename) {
 	
@@ -25,6 +22,16 @@ function readtheFile($filename) {
 
 		}
 	return $array;
+}
+
+$todos->write_lines($todoList);
+
+function savefile($filename, $array) {
+	$handle = fopen($filename, 'w');
+	foreach ($array as $item) {
+		fwrite($handle, $item . PHP_EOL);		
+	}
+	fclose($handle);
 }
 
 $list_items = readtheFile(FILENAME);
