@@ -6,7 +6,7 @@ $list_items =[];
 $error_message = "";
 
 $todos = new Filestore('data/list.txt');
-$todoList = $todos->read_lines($todos->filename);
+$todoList = $todos->read();
 
 define('FILENAME', $todos->filename);
 
@@ -24,7 +24,7 @@ function readtheFile($filename) {
 	return $array;
 }
 
-$todos->write_lines($todoList);
+$todos->write($todoList);
 
 function savefile($filename, $array) {
 	$handle = fopen($filename, 'w');
